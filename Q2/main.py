@@ -1,6 +1,7 @@
 # Some parts of code taken from Session 2 and 3 from module CMT307 Applied Machine Learning
 
 import os
+import sys
 
 # must install
 import pandas as pd
@@ -26,16 +27,18 @@ from featureSelection import featureSelection, tryClassifiers
 # nltk.download('words')
 # nltk.download('universal_tagset')
 
-def main():
+def main(folder_name):
+    print('here')
+    print(folder_name)
     # linux
-    path_train_neg = os.getcwd()+'/datasets_coursework1/IMDb/train/imdb_train_neg.txt'
-    path_train_pos = os.getcwd()+'/datasets_coursework1/IMDb/train/imdb_train_pos.txt'
+    path_train_neg = os.getcwd()+'/'+folder_name+'/train/imdb_train_neg.txt'
+    path_train_pos = os.getcwd()+'/'+folder_name+'/train/imdb_train_pos.txt'
 
-    path_dev_neg = os.getcwd()+'/datasets_coursework1/IMDb/dev/imdb_dev_neg.txt'
-    path_dev_pos = os.getcwd()+'/datasets_coursework1/IMDb/dev/imdb_dev_pos.txt'
+    path_dev_neg = os.getcwd()+'/'+folder_name+'/dev/imdb_dev_neg.txt'
+    path_dev_pos = os.getcwd()+'/'+folder_name+'/dev/imdb_dev_pos.txt'
 
-    path_test_neg = os.getcwd()+'/datasets_coursework1/IMDb/test/imdb_test_neg.txt'
-    path_test_pos = os.getcwd()+'/datasets_coursework1/IMDb/test/imdb_test_pos.txt'
+    path_test_neg = os.getcwd()+'/'+folder_name+'/test/imdb_test_neg.txt'
+    path_test_pos = os.getcwd()+'/'+folder_name+'/test/imdb_test_pos.txt'
 
     # windows
     #path_dev_neg = os.getcwd()+'\\datasets_coursework1\\IMDb\\dev\\imdb_dev_neg.txt'
@@ -110,4 +113,6 @@ def main():
 
     print(pd.DataFrame([mean_df], columns=cols, index=['mean']))
 
-main()
+# main('IMDb')
+if __name__ == "__main__":
+    main(sys.argv[1])
