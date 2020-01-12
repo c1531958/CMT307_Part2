@@ -25,7 +25,7 @@ Your_file_folder_name/test/imdb_test_pos.txt
 ```
 5. Run the following command to run the code. Replace IMDb with your own folder name if you wish to use your own files
 ```
-    pipenv run python Q2/main.py IMDb
+    pipenv run python main.py IMDb
 ```
 
   - Import a HTML file and watch it magically convert to Markdown

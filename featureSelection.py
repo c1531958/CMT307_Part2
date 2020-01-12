@@ -31,8 +31,6 @@ def featureSelection(list_num_features, training_set, df_train_pos, df_train_neg
         k_feature_vocabulary = [vocabulary[i] for i in indexes_selected]
         X_dev, Y_dev  = getXY(df_dev_pos, df_dev_neg, k_feature_vocabulary)
         
-        # Transform to vector
-        # X_dev=np.asarray(X_dev)
         Y_dev_predictions = clf_svm.predict(X_dev)
 
         # Calculate performance measures
@@ -74,6 +72,7 @@ def tryClassifiers(df_dev_pos, df_dev_neg, best_vocabulary, clf_svm, best_X_trai
     classifiers = [clf_svm, clf_rf, clf_lr]
     best_fscore_clf = 0.0
     best_clf = None
+    # test the performance of multiple classifiers
     for classifier in classifiers:
         classifier.fit(best_X_train, best_Y_train)
 

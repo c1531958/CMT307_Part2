@@ -3,24 +3,13 @@
 import os
 import sys
 
-# must install
-import pandas as pd
 import nltk
-
-
-from sklearn.feature_extraction.text import CountVectorizer
-import nltk.sentiment.sentiment_analyzer
 import numpy as np
-
-# for feature selection
 from sklearn import svm
-
-from sklearn.model_selection import KFold
-
-from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 
 from dataPreprocessing import getVocabulary, getXY, selectBestFeatures
 from featureSelection import featureSelection, tryClassifiers
+from testPerformance import kFoldCrossValidation
 
 # nltk.download('averaged_perceptron_tagger')
 # nltk.download('maxent_ne_chunker')
@@ -28,8 +17,6 @@ from featureSelection import featureSelection, tryClassifiers
 # nltk.download('universal_tagset')
 
 def main(folder_name):
-    print('here')
-    print(folder_name)
     # linux
     path_train_neg = os.getcwd()+'/'+folder_name+'/train/imdb_train_neg.txt'
     path_train_pos = os.getcwd()+'/'+folder_name+'/train/imdb_train_pos.txt'
@@ -73,46 +60,14 @@ def main(folder_name):
                                                                     df_dev_pos, df_dev_neg)#,500,750, 1000]
 
 
-
     # Try different types of classifiers
     best_clf = tryClassifiers( df_dev_pos, df_dev_neg,
                                best_vocabulary, clf_svm,
                                best_X_train, best_Y_train)
 
-    X, Y = getXY(df_test_pos, df_test_neg, best_vocabulary)
+    # k-fold cross validation for test data
     folds = 5
-    kf = KFold(n_splits=folds, shuffle=True)
-    kf.get_n_splits(X)
+    test(folds, df_test_pos, df_test_neg)
 
-
-    stats_best = []
-    for train_index, test_index in kf.split(X):
-        X_train, X_test = X[train_index], X[test_index]
-        Y_train, Y_test = Y[train_index], Y[test_index]
-
-        best_clf.fit(X_train, Y_train)
-        Y_pred = best_clf.predict(X_test)
-
-        accuracy = accuracy_score(Y_test, Y_pred)
-        precision, recall, fscore, support = precision_recall_fscore_support(Y_test, Y_pred, average='macro')
-
-        stats = [accuracy, precision, recall, fscore]
-        stats_best.append(stats)
-
-
-    folds_index = ['k=' + str (i) for i in range(1, folds+1)]
-    cols = ['accuracy', 'precision', 'recall', 'fscore']
-    df_best = pd.DataFrame(stats_best, columns=cols, index=folds_index)
-
-    folds_index.append('mean')
-    mean_df = [ df_best['accuracy'].mean(),
-                        df_best['precision'].mean(),
-                        df_best['recall'].mean(),
-                        df_best['fscore'].mean()
-                    ]
-
-    print(pd.DataFrame([mean_df], columns=cols, index=['mean']))
-
-# main('IMDb')
 if __name__ == "__main__":
     main(sys.argv[1])
