@@ -24,9 +24,8 @@ Your_file_folder_name/dev/imdb_dev_pos.txt
 Your_file_folder_name/test/imdb_test_neg.txt
 Your_file_folder_name/test/imdb_test_pos.txt
 ```
+
 6. Run the following command to run the code. Replace IMDb with your own folder name if you wish to use your own files. NOTE, it will roughly take 30 minutes to finish running.
 ```
     pipenv run python main.py IMDb
 ```
-
-
