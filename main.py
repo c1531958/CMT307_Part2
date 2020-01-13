@@ -11,10 +11,11 @@ from dataPreprocessing import getVocabulary, getXY, selectBestFeatures
 from featureSelection import featureSelection, tryClassifiers
 from testPerformance import kFoldCrossValidation
 
-# nltk.download('averaged_perceptron_tagger')
-# nltk.download('maxent_ne_chunker')
-# nltk.download('words')
-# nltk.download('universal_tagset')
+# need to download only once
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
+nltk.download('universal_tagset')
 
 def main(folder_name):
     # linux
@@ -28,14 +29,14 @@ def main(folder_name):
     path_test_pos = os.getcwd()+'/'+folder_name+'/test/imdb_test_pos.txt'
 
     # windows
-    #path_dev_neg = os.getcwd()+'\\datasets_coursework1\\IMDb\\dev\\imdb_dev_neg.txt'
-    #path_dev_pos = os.getcwd()+'\\datasets_coursework1/IMDb/dev/imdb_dev_pos.txt'
+    #path_dev_neg = os.getcwd()+'\\'+folder_name+'\\dev\\imdb_dev_neg.txt'
+    #path_dev_pos = os.getcwd()+'\\'+folder_name+'\\dev\\imdb_dev_pos.txt'
 
-    #path_test_neg = os.getcwd()+'\\datasets_coursework1\\IMDb\\test\\imdb_test_neg.txt'
-    #path_test_pos = os.getcwd()+'\\datasets_coursework1\\IMDb\\test\\imdb_test_pos.txt'
+    #path_test_neg = os.getcwd()+'\\'+folder_name+'\\test\\imdb_test_neg.txt'
+    #path_test_pos = os.getcwd()+'\\'+folder_name+'\\test\\imdb_test_pos.txt'
 
-    #path_train_neg = os.getcwd()+'\\datasets_coursework1\\IMDb\\train\\imdb_train_neg.txt'
-    #path_train_pos = os.getcwd()+'\\datasets_coursework1\\IMDb\\train\\imdb_train_pos.txt'
+    #path_train_neg = os.getcwd()+'\\'+folder_name+'\\train\\imdb_train_neg.txt'
+    #path_train_pos = os.getcwd()+'\\'+folder_name+'\\train\\imdb_train_pos.txt'
 
 
     df_train_pos = open(path_train_pos, encoding="utf8").read().splitlines()
@@ -67,7 +68,7 @@ def main(folder_name):
 
     # k-fold cross validation for test data
     folds = 5
-    test(folds, df_test_pos, df_test_neg)
+    kFoldCrossValidation(folds, df_test_pos, df_test_neg, best_vocabulary, best_clf)
 
 if __name__ == "__main__":
     main(sys.argv[1])
