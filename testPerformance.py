@@ -3,7 +3,7 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 from sklearn.model_selection import KFold
 import pandas as pd
 
-def kFoldCrossValidation(folds, df_test_pos, df_test_neg):
+def kFoldCrossValidation(folds, df_test_pos, df_test_neg, best_vocabulary, best_clf):
     X, Y = getXY(df_test_pos, df_test_neg, best_vocabulary)
     kf = KFold(n_splits=folds, shuffle=True)
     kf.get_n_splits(X)
